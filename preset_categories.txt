@@ -1,0 +1,8 @@
+Basses=0;
+Strings & Strings=1;
+Scifi=2;
+Percussive=3;
+Weird=4;
+Dubstep=5;
+
+
