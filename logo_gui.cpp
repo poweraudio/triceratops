@@ -41,35 +41,6 @@ void logo_gui::load_logo(string bundle_path)
 		check_file.close();
 	}
 
-	if (!logo_loaded)
-	{
-		file_name.str("");
-		file_name  << "/usr/lib/lv2/triceratops.lv2/logo.png";
-		ifstream check_file(file_name.str() );
-		if (check_file)
-		{
-			cout << "loading " << file_name.str() << endl;
-			// Load pixbuf
-			image_ptr_ = Gdk::Pixbuf::create_from_file (file_name.str().c_str()); 
-			logo_loaded = true;
-		}
-		check_file.close();
-	}
-
-	if (!logo_loaded)
-	{
-		file_name.str("");
-		file_name  << "/usr/local/lib/lv2/triceratops.lv2/logo.png";
-		ifstream check_file(file_name.str() );
-		if (check_file)
-		{
-			cout << "loading " << file_name.str() << endl;
-			// Load pixbuf
-			image_ptr_ = Gdk::Pixbuf::create_from_file (file_name.str().c_str());
-			logo_loaded = true;
-		}
-		check_file.close();
-	}
 
 
 

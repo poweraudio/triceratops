@@ -125,7 +125,7 @@ class presets : public Gtk::DrawingArea
 
 	// FUNCTIONS USED IN THIS CLASS
 
-	presets();
+	presets(const std::string& bundle_path_in);
 	~presets();
 	void position_top(bool);
 	int pos_mode;

@@ -5,7 +5,8 @@
 
 
 
-presets::presets()
+presets::presets(const std::string& bundle_path_in):
+	bundle_path(bundle_path_in)
 {
 	text = "";
 	pos_mode = 0;
@@ -347,12 +348,15 @@ bool presets::on_expose_event(GdkEventExpose* event)
 		cr->move_to( width/2 - (txt_extents.width/2),height - ((width/20) * 6));
 	       	cr->show_text(txt.str());
 
-		cr->set_font_size(width/16);
-		txt.str("");
-		txt << "Category: " << preset_list[current_category].name;
-		cr->get_text_extents(txt.str(),txt_extents);
-		cr->move_to( width/2 - (txt_extents.width/2),height - ((width/20) * 4));
-	       	cr->show_text(txt.str());
+		if (!preset_list.empty())
+		{
+			cr->set_font_size(width/16);
+			txt.str("");
+			txt << "Category: " << preset_list[current_category].name;
+			cr->get_text_extents(txt.str(),txt_extents);
+			cr->move_to( width/2 - (txt_extents.width/2),height - ((width/20) * 4));
+			cr->show_text(txt.str());
+		}
 
 
 	}
@@ -394,31 +398,7 @@ bool presets::read_category_file()
 	if (!category_file_exists)
 	{
 		file_name.str("");
-		file_name  << bundle_path << "/triceratops_categories.txt";
-		ifstream check_file(file_name.str() );
-		if ( check_file)
-		{
-			cout << "loading categories from " << file_name.str() << endl;
-			category_file_exists = true;
-		}
-	}
-
-	if (!category_file_exists)
-	{
-		file_name.str("");
-		file_name  << "/usr/lib/lv2/triceratops.lv2/triceratops_categories.txt";
-		ifstream check_file(file_name.str() );
-		if ( check_file)
-		{
-			cout << "loading categories from " << file_name.str() << endl;
-			category_file_exists = true;
-		}
-	}
-
-	if (!category_file_exists)
-	{
-		file_name.str("");
-		file_name  << "/usr/local/lib/lv2/triceratops.lv2/triceratops_categories.txt";
+		file_name  << bundle_path << "triceratops_categories.txt";
 		ifstream check_file(file_name.str() );
 		if ( check_file)
 		{
@@ -470,7 +450,7 @@ bool presets::read_category_file()
 void presets::get_preset_names()
 {
 
-	//------------------- LOAD /usr/lib/lv2/triceratops-presets.lv2/ presets
+	//------------------- LOAD $HOME/.lv2 presets
 
 	stringstream home_lv2;
 	home_lv2.str("");
@@ -555,12 +535,15 @@ void presets::get_preset_names()
 	}
 	closedir(dp);
 
-	//------------------- LOAD /usr/lib/lv2/triceratops-presets.lv2/ presets
+	//------------------- LOAD BUNDLE_PATH/../triceratops-presets.lv2/ presets
+	stringstream presets_lv2;
+	presets_lv2.str("");
+	presets_lv2 << bundle_path << "../triceratops-presets.lv2/";
+	dir = presets_lv2.str();
 
-
-	if ((dp  = opendir("/usr/lib/lv2/triceratops-presets.lv2/")) == NULL)
+	if ((dp  = opendir(dir.c_str())) == NULL)
 	{
-		cout << "No presets found in  /usr/lib/lv2/triceratops-presets.lv2/" << endl;
+		cout << "No presets found in  " << dir << endl;
 		closedir(dp);
 	}
 
@@ -576,7 +559,7 @@ void presets::get_preset_names()
 			{
 				stringstream preset_file_path;
 				preset_file_path.str("");
-				preset_file_path << "/usr/lib/lv2/triceratops-presets.lv2/";
+				preset_file_path << dir;
 				preset_file_path << string(dirp->d_name);
 
 				ifstream check_file(preset_file_path.str());
@@ -598,61 +581,7 @@ void presets::get_preset_names()
 				new_preset_object.type = PRESET_TYPE_PRESET;
 				new_preset_object.category = preset_category_number;
 				new_preset_object.name = string(dirp->d_name);
-				new_preset_object.dir = "/usr/lib/lv2/triceratops-presets.lv2/";
-				new_preset_object.unfold = false;
-
-				preset_list.push_back(new_preset_object);
-			}
-		}
-		closedir(dp);
-	}
-
-	//------------------- LOAD /usr/local/lib/lv2/triceratops-presets.lv2/ presets
-
-
-	if ((dp  = opendir("/usr/local/lib/lv2/triceratops-presets.lv2/")) == NULL)
-	{
-		cout << "No presets found in /usr/local/lib/lv2/triceratops-presets.lv2/"
-			<< endl;
-		closedir(dp);
-	}
-
-	else
-	{
-
-		while ((dirp = readdir(dp)) != NULL)
-		{
-			if (string(dirp->d_name) != ".directory" && 
-				string(dirp->d_name) != "." &&
-				string(dirp->d_name) != ".." &&
-				string(dirp->d_name) != "manifest.ttl")
-			{
-				stringstream preset_file_path;
-				preset_file_path.str("");
-				preset_file_path << "/usr/local/lib/lv2/triceratops-presets.lv2/";
-				preset_file_path << string(dirp->d_name);
-
-				ifstream check_file(preset_file_path.str());
-
-				string line;
-				int preset_category_number = 0;
-	
-				while (getline(check_file,line))  
-				{
-					int preset_category_finder = line.rfind("preset_category");
-					if (preset_category_finder > 0)
-					{
-						getline(check_file,line);
-						istringstream (line.substr(line.rfind("pset:value") + 11)) >> preset_category_number;
-					}
-				}
-
-				presets_object new_preset_object;
-
-				new_preset_object.type = PRESET_TYPE_PRESET;
-				new_preset_object.category = preset_category_number;
-				new_preset_object.name = string(dirp->d_name);
-				new_preset_object.dir = "/usr/local/lib/lv2/triceratops-presets.lv2/";
+				new_preset_object.dir = dir;
 				new_preset_object.unfold = false;
 
 				preset_list.push_back(new_preset_object);
@@ -1307,10 +1236,8 @@ int presets::get_symbol_port(string symbol)
 {
 	string triceratops_ttl_file_name = "";
 
-	ifstream  triceratops_ttl("/usr/lib/lv2/triceratops.lv2/triceratops.ttl" );
-	if (triceratops_ttl) triceratops_ttl_file_name = "/usr/lib/lv2/triceratops.lv2/triceratops.ttl" ;
-	triceratops_ttl.open("/usr/local/lib/lv2/triceratops.lv2/triceratops.ttl" );
-	if (triceratops_ttl) triceratops_ttl_file_name = "/usr/local/lib/lv2/triceratops.lv2/triceratops.ttl";
+	ifstream  triceratops_ttl(bundle_path + "triceratops.ttl" );
+	if (triceratops_ttl) triceratops_ttl_file_name = bundle_path + "triceratops.ttl" ;
 
 	int current_port = -1;
 	int symbol_port = -1;
