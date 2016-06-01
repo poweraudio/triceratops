@@ -78,11 +78,11 @@ static GtkWidget* make_gui(triceratopsGUI *self) {
 	// check for default config file
 
 	string config_file_name = "";
-	ifstream check_file("/usr/lib/lv2/triceratops.lv2/triceratops.conf" );
-	if (check_file) config_file_name = "/usr/local/lib/lv2/triceratops.lv2/triceratops.conf";
-	check_file.open("/usr/local/lib/lv2/triceratops.lv2/triceratops.conf" );
-	if (check_file) config_file_name = "/usr/local/lib/lv2/triceratops.lv2/triceratops.conf";
-	
+
+	string bundle_config_name = string(self->bundle_path) + string("triceratops.conf");
+	ifstream check_file(bundle_config_name);
+	if (check_file) config_file_name = bundle_config_name;
+
 	if (config_file_name !="");
 	{
 		string temp_str;
@@ -155,7 +155,7 @@ static GtkWidget* make_gui(triceratopsGUI *self) {
 	self->vbox2 = new Gtk::VBox();
 	self->vbox3 = new Gtk::VBox();
 
-	self->widget_presets = new presets();
+	self->widget_presets = new presets(self->bundle_path);
 
 	self->widget_presets->top_colour = top_colour;
 	self->widget_presets->bottom_colour = bottom_colour;
@@ -188,10 +188,10 @@ static GtkWidget* make_gui(triceratopsGUI *self) {
 	self->logo3 = new logo_gui();
 	self->logo4 = new logo_gui();
 
-	self->logo1->load_logo("/usr/local/lib/lv2/triceratops.lv2/");
-	self->logo2->load_logo("/usr/local/lib/lv2/triceratops.lv2/");
-	self->logo3->load_logo("/usr/local/lib/lv2/triceratops.lv2/");
-	self->logo4->load_logo("/usr/local/lib/lv2/triceratops.lv2/");
+	self->logo1->load_logo(self->bundle_path);
+	self->logo2->load_logo(self->bundle_path);
+	self->logo3->load_logo(self->bundle_path);
+	self->logo4->load_logo(self->bundle_path);
 
 	self->logo1->top_colour.set(top_colour.to_string());
 	self->logo1->bottom_colour.set(bottom_colour.to_string());
