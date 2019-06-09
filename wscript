@@ -34,7 +34,7 @@ def configure(conf):
         	conf.env.append_unique('CXXFLAGS', ['-fPIC','-fpermissive','-finline-functions'])
 
     if not autowaf.is_child():
-        autowaf.check_pkg(conf, 'lv2core', uselib_store='LV2CORE')
+        autowaf.check_pkg(conf, 'lv2', uselib_store='LV2CORE')
         autowaf.check_pkg(conf, 'gtkmm-2.4', uselib_store='GTKMM')
 
     # Set env['pluginlib_PATTERN']
