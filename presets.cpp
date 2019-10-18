@@ -112,6 +112,7 @@ bool presets::on_key_press_event(GdkEventKey* event)
 	
 	queue_draw();
 	
+	return true;
 }
 
 //-----------------------------------------------------------------------------------------------------
@@ -166,7 +167,7 @@ bool presets::on_button_press_event(GdkEventButton* event)
 		}
 
 	}
-
+	return true;
 }
 
 //---------------------------------------------------------------------------------------------------------
@@ -194,6 +195,7 @@ bool presets::on_button_release_event(GdkEventButton* event)
 	}
 
 	queue_draw();
+	return true;
 }
 
 
@@ -440,7 +442,7 @@ bool presets::read_category_file()
 	get_preset_names();
 		
 
-
+	return true;
 }
 
 
@@ -463,7 +465,7 @@ void presets::get_preset_names()
 	if ((dp  = opendir(dir.c_str())) == NULL)
 	{
 		cout << "No presets found in " << dir << endl;
-		closedir(dp);
+		
 	}
 
 	else
@@ -544,7 +546,6 @@ void presets::get_preset_names()
 	if ((dp  = opendir(dir.c_str())) == NULL)
 	{
 		cout << "No presets found in  " << dir << endl;
-		closedir(dp);
 	}
 
 	else

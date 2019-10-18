@@ -54,6 +54,7 @@ void toggle::set_value(int _value)
 
 bool toggle::on_button_press_event(GdkEventButton* event)
 {
+	return true;
 }
 
 bool toggle::on_button_release_event(GdkEventButton* event)

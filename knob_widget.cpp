@@ -52,7 +52,10 @@ void knob::position_top(bool mode)
 		grad_bottom_colour = 0.1;
 		pos_mode = 2;
 	}
+
+	return;
 }
+
 
 void knob::set_snap(bool _snap)
 {
@@ -224,6 +227,9 @@ bool knob::on_scroll_event(GdkEventScroll* event)
 		Gdk::Rectangle r(0,0,get_allocation().get_width(), get_allocation().get_height() );
 		win->invalidate_rect(r, false);
 	}
+
+
+	return true;
 }
 
 

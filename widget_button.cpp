@@ -42,12 +42,14 @@ bool widget_button::on_button_press_event(GdkEventButton* event)
 {
 	pressed = true;
 	queue_draw();	
+	return true;
 }
 
 bool widget_button::on_button_release_event(GdkEventButton* event)
 {
 	pressed = false;
 	queue_draw();	
+	return true;
 }
 
 

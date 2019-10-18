@@ -54,6 +54,7 @@ void wave_widget::set_value(int _value)
 
 bool wave_widget::on_button_press_event(GdkEventButton* event)
 {
+	return false;
 }
 
 bool wave_widget::on_button_release_event(GdkEventButton* event)

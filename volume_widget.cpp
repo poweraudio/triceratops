@@ -331,5 +331,7 @@ bool volume::on_scroll_event(GdkEventScroll* event)
 		Gdk::Rectangle r(0,0,get_allocation().get_width(), get_allocation().get_height() );
 		win->invalidate_rect(r, false);
 	}
+	
+	return true;
 }
 

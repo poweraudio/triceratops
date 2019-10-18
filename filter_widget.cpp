@@ -45,6 +45,7 @@ void filter_widget::set_label(string text)
 
 bool filter_widget::on_button_press_event(GdkEventButton* event)
 {
+	return true;
 }
 
 bool filter_widget::on_button_release_event(GdkEventButton* event)

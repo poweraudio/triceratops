@@ -57,6 +57,7 @@ void spacer::set_value(int _value)
 
 bool spacer::on_button_press_event(GdkEventButton* event)
 {
+	return true;
 }
 
 bool spacer::on_button_release_event(GdkEventButton* event)

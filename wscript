@@ -7,7 +7,7 @@ from waflib.extras import autowaf as autowaf
 
 # Variables for 'waf dist'
 APPNAME = 'triceratops.lv2'
-VERSION = '0.2.1'
+VERSION = '0.3.2'
 
 # Mandatory variables
 top = '.'
@@ -25,14 +25,17 @@ def configure(conf):
     autowaf.display_header('triceratops Configuration')
    
     if conf.env['MSVC_COMPILER']:
-        conf.env.append_unique('CXXFLAGS', ['-TP', '-MD'])
+        conf.env.append_unique('CXXFLAGS', ['-TP', '-MD', '-g'])
     else:
-        conf.env.append_unique('CXXFLAGS', ['-O2','-funroll-loops','-std=c++0x'])
+        conf.env.append_unique('CXXFLAGS', ['-O2','-funroll-loops','-std=c++0x','-g'])
 
-    conf.env.CXXFLAGS += ['-fPIC']
+	if sys.maxint >= 9223372036854775807:
+		print "detected 64 bit architecture, enabling -fPIC"
+        	conf.env.append_unique('CXXFLAGS', ['-fPIC','-fpermissive','-finline-functions'])
 
     if not autowaf.is_child():
         autowaf.check_pkg(conf, 'lv2', uselib_store='LV2CORE')
+        autowaf.check_pkg(conf, 'gtkmm-2.4', uselib_store='GTKMM')
 
     # Set env['pluginlib_PATTERN']
     pat = conf.env['cshlib_PATTERN']
@@ -82,12 +85,22 @@ def build(bld):
               install_path = '${LV2DIR}/%s' % bundle,
               uselib       = 'LV2CORE',
               includes     = includes)
+    
+    # Build UI library
+    obj = bld(features     = 'cxx cshlib',
+              env          = penv,
+              source       = 'triceratops_gui.cpp fader_widget.cpp wave_widget.cpp filter_widget.cpp knob_widget.cpp volume_widget.cpp toggle_widget.cpp spacer_widget.cpp presets.cpp widget_button.cpp dco_gui.cpp lfo_gui.cpp adsr_gui.cpp adsr_lfo_gui.cpp amp_gui.cpp echo_gui.cpp reverb_gui.cpp modifier_gui.cpp unison_gui.cpp logo_gui.cpp ',
+              name         = 'triceratops_gui',
+              target       = '%s/triceratops_gui' % bundle,
+              install_path = '${LV2DIR}/%s' % bundle,
+              uselib       = 'LV2CORE GTKMM',
+              includes     = includes)
 
     bld.install_files('${LV2DIR}/triceratops.lv2/', 'minblep.mat')
     bld.install_files('${LV2DIR}/triceratops.lv2/', 'logo.png')
     bld.install_files('${LV2DIR}/triceratops.lv2/', 'triceratops.conf')
     bld.install_files('${LV2DIR}/triceratops.lv2/', 'triceratops_categories.txt')
-    bld.install_files('${LV2DIR}/triceratops.lv2', bld.path.ant_glob('presets.lv2/*.*'))
+    bld.install_files('${LV2DIR}/triceratops-presets.lv2', bld.path.ant_glob('presets.lv2/*.*'))
 
 
 
