@@ -29,9 +29,9 @@ def configure(conf):
     else:
         conf.env.append_unique('CXXFLAGS', ['-O2','-funroll-loops','-std=c++0x','-g'])
 
-	if sys.maxint >= 9223372036854775807:
-		print "detected 64 bit architecture, enabling -fPIC"
-        	conf.env.append_unique('CXXFLAGS', ['-fPIC','-fpermissive','-finline-functions'])
+    if sys.maxsize >= 9223372036854775807:
+        print("detected 64 bit architecture, enabling -fPIC")
+        conf.env.append_unique('CXXFLAGS', ['-fPIC','-fpermissive','-finline-functions'])
 
     if not autowaf.is_child():
         autowaf.check_pkg(conf, 'lv2', uselib_store='LV2CORE')
