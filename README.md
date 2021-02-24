@@ -9,6 +9,7 @@ Triceratops now uses waf / wscript to compile unpack and cd into the source fold
 `./build_triceratops`
 
 To clean the build directory type:
+
 `./cleanup`
 
 
