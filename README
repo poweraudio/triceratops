@@ -4,12 +4,12 @@
 
  Triceratops now uses waf / wscript to compile unpack and cd into the source folder, type :-
 
- ./configur_triceratops
+ ./configure_triceratops
 
  ./build_triceratops
 
 To clean the build directory type:
-./clean
+./cleanup
 
 
  once installed launch using jalv.gtk type:-
