@@ -7,7 +7,7 @@ from waflib.extras import autowaf as autowaf
 
 # Variables for 'waf dist'
 APPNAME = 'triceratops.lv2'
-VERSION = '0.3.2'
+VERSION = '0.4'
 
 # Mandatory variables
 top = '.'

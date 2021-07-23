@@ -432,9 +432,59 @@
 	rdfs:seeAlso <nervous_in_a_cavern.ttl> ;
 	lv2:appliesTo <http://nickbailey.co.nr/triceratops> .
 
+	<CZesque_Pad.ttl>
+	a pset:Preset ;
+	rdfs:seeAlso <CZesque_Pad.ttl> ;
+	lv2:appliesTo <http://nickbailey.co.nr/triceratops> .
 
+	<DeepPluck.ttl>
+	a pset:Preset ;
+	rdfs:seeAlso <DeepPluck.ttl> ;
+	lv2:appliesTo <http://nickbailey.co.nr/triceratops> .
+	
+	<First_Exoplanet_Data.ttl>
+	a pset:Preset ;
+	rdfs:seeAlso <First_Exoplanet_Data.ttl> ;
+	lv2:appliesTo <http://nickbailey.co.nr/triceratops> .
 
-
-
-
+	<First_Exoplanet_Data_2.ttl>
+	a pset:Preset ;
+	rdfs:seeAlso <First_Exoplanet_Data_2.ttl> ;
+	lv2:appliesTo <http://nickbailey.co.nr/triceratops> .
+	
+	<Glass_Pad.ttl>
+	a pset:Preset ;
+	rdfs:seeAlso <Glass_Pad.ttl> ;
+	lv2:appliesTo <http://nickbailey.co.nr/triceratops> .
+	
+	<Mantronic_Bass.ttl>
+	a pset:Preset ;
+	rdfs:seeAlso <Mantronic_Bass.ttl> ;
+	lv2:appliesTo <http://nickbailey.co.nr/triceratops> .
+	
+	<PluckBass_2.ttl>
+	a pset:Preset ;
+	rdfs:seeAlso <PluckBass_2.ttl> ;
+	lv2:appliesTo <http://nickbailey.co.nr/triceratops> .
+	
+	<Selected_Ambient_EPiano.ttl>
+	a pset:Preset ;
+	rdfs:seeAlso <Selected_Ambient_EPiano.ttl> ;
+	lv2:appliesTo <http://nickbailey.co.nr/triceratops> .
+	
+ 	<The_Thing_Bass.ttl>
+	a pset:Preset ;
+	rdfs:seeAlso <The_Thing_Bass.ttl> ;
+	lv2:appliesTo <http://nickbailey.co.nr/triceratops> .
+	
+	<Weird_Harmonic_EPiano.ttl>
+	a pset:Preset ;
+	rdfs:seeAlso <Weird_Harmonic_EPiano.ttl> ;
+	lv2:appliesTo <http://nickbailey.co.nr/triceratops> .
+	
+	<Winds_Of_Mars.ttl>
+	a pset:Preset ;
+	rdfs:seeAlso <Winds_Of_Mars.ttl> ;
+	lv2:appliesTo <http://nickbailey.co.nr/triceratops> .
+	
 
