@@ -44,6 +44,8 @@ def configure(conf):
     conf.env['pluginlib_PATTERN'] = pat
     conf.env['pluginlib_EXT'] = pat[pat.rfind('.'):]
 
+    conf.env.LV2DIR = os.getenv('LV2_PATH').split(':')[2]
+
     autowaf.display_msg(conf, "LV2 bundle directory", conf.env['LV2DIR'])
     print('')
 
