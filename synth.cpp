@@ -92,6 +92,21 @@ synth::synth( double _rate,string bundle_path)
 	err = fread(gMinBLEP.lpTable,iSize,1,fp);
 
 	fclose(fp);
+	
+	FILE *fp2=fopen("/home/thor/minblep.txt","w+");
+
+
+	fprintf (fp2, "minBLEP_table[] = { ");
+
+	/* write 10 lines of text into the file stream*/
+	for(int i = 0; i < iSize/sizeof(double); i++)
+	{
+		fprintf (fp2, "%lf, ",gMinBLEP.lpTable[i]);
+	}
+
+	fprintf (fp2, "} ");
+
+	fclose(fp2);
 
 	buf0_left=0; buf1_left=0;
 
