@@ -62,7 +62,7 @@ lv2:port [
 		pset:value 0
 		] , [ 
 		lv2:symbol "inertia_one" ;
-		pset:value 0.782895
+		pset:value 0
 		] , [ 
 		lv2:symbol "active_two" ;
 		pset:value 0
