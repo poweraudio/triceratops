@@ -275,7 +275,7 @@
 		pset:value 0.0
 	] , [
 		lv2:symbol "preset_category" ;
-		pset:value 9.0
+		pset:value 14
 	] , [
 		lv2:symbol "pulsewidth_one" ;
 		pset:value -0.01428571

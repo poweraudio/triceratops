@@ -14,7 +14,7 @@ lv2:port [
 		pset:value 1.05714
 		] , [ 
 		lv2:symbol "preset_category" ;
-		pset:value 2
+		pset:value 13
 		] , [ 
 		lv2:symbol "master_tune" ;
 		pset:value 0

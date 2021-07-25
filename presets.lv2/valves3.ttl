@@ -11,7 +11,7 @@
 	rdfs:label "valves3";
 lv2:port [
 		lv2:symbol "preset_category" ;
-		pset:value 4
+		pset:value 9
 		] , [ 
 		lv2:symbol "master_volume" ;
 		pset:value 0.6
