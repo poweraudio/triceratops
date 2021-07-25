@@ -11,7 +11,7 @@
 	rdfs:label "nice_square_mod_3";
 lv2:port [
 		lv2:symbol "preset_category" ;
-		pset:value 2
+		pset:value 11
 		] , [ 
 		lv2:symbol "master_volume" ;
 		pset:value 0.75

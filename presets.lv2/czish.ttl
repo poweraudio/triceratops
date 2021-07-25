@@ -11,7 +11,7 @@
 	rdfs:label "czish";
 lv2:port [
 		lv2:symbol "preset_category" ;
-		pset:value 3
+		pset:value 13
 		] , [ 
 		lv2:symbol "master_volume" ;
 		pset:value 0.75
