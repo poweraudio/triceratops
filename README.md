@@ -4,13 +4,14 @@ Triceratops is a virtual subtractive synthesizer plugin with 3 oscillators, 3 AD
 
 Triceratops now uses waf / wscript to compile unpack and cd into the source folder, type :-
 
-`./configure_triceratops`
+`./waf configure`
 
-`./build_triceratops`
+`./waf`
+`sudo ./waf install`
 
 To clean the build directory type:
 
-`./cleanup`
+`./waf clean`
 
 
 Once installed launch using jalv.gtk type:-
@@ -19,4 +20,4 @@ Once installed launch using jalv.gtk type:-
 
 To uninstall and remove type this from the source directory:-
 
-`./waf uninstall`
+`sudo ./waf uninstall`
