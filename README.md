@@ -7,6 +7,7 @@ Triceratops now uses waf / wscript to compile unpack and cd into the source fold
 `./waf configure`
 
 `./waf`
+
 `sudo ./waf install`
 
 To clean the build directory type:
