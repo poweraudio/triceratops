@@ -1686,11 +1686,20 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 
 		}
 
-		float out_left_dist = out_left[pos] = out_left[pos] - (TRICERATOPS_AMP_DRIVE * (1/3) * pow(out_left[pos],3));
-		float out_right_dist = out_right[pos] = out_right[pos] - (TRICERATOPS_AMP_DRIVE * (1/3) * pow(out_right[pos],3));
 
-		out_left[pos] = out_left_dist;
-		out_right[pos] = out_right_dist;
+		// float out_left_dist = out_left[pos] - (TRICERATOPS_AMP_DRIVE * ( pow(out_left[pos],1.5)/1.5));
+		// float out_right_dist = out_right[pos] - (TRICERATOPS_AMP_DRIVE * ( pow(out_right[pos],1.5)/1.5));
+		
+		if (TRICERATOPS_AMP_DRIVE > 0) // Saturated Clipping Distortion Enabled
+		{
+			float out_left_atanClip = (2/M_PI) * atan(out_left[pos] * ((0.1+TRICERATOPS_AMP_DRIVE)*100)); 
+			float out_right_atanClip = (2/M_PI) * atan(out_right[pos] * ((0.1+TRICERATOPS_AMP_DRIVE)*100));
+
+			out_left[pos] = out_left_atanClip * 0.25;
+			out_right[pos] = out_right_atanClip * 0.25;
+		}
+		
+
 
 	}	
 
