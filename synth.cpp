@@ -190,6 +190,8 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 	int TRICERATOPS_LFO1_ROUTE_TWO_DEST = synth_params->TRICERATOPS_LFO1_ROUTE_TWO_DEST[0];
 	int TRICERATOPS_LFO2_ROUTE_TWO_DEST = synth_params->TRICERATOPS_LFO2_ROUTE_TWO_DEST[0];
 	int TRICERATOPS_LFO3_ROUTE_TWO_DEST = synth_params->TRICERATOPS_LFO3_ROUTE_TWO_DEST[0];
+	
+	float TRICERATOPS_AMP_DRIVE = synth_params->TRICERATOPS_AMP_DRIVE[0];
 
 	for (uint32_t pos = 0; pos < n_samples; ++pos)
 	{
@@ -1684,7 +1686,15 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 
 		}
 
+		float out_left_dist = out_left[pos] = out_left[pos] - (TRICERATOPS_AMP_DRIVE * (1/3) * pow(out_left[pos],3));
+		float out_right_dist = out_right[pos] = out_right[pos] - (TRICERATOPS_AMP_DRIVE * (1/3) * pow(out_right[pos],3));
+
+		out_left[pos] = out_left_dist;
+		out_right[pos] = out_right_dist;
+
 	}	
+
+
 
 
 	return;
