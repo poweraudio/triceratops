@@ -1,2 +1,0 @@
-python2 ./waf clean
-rm build -r
