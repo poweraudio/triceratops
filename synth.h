@@ -4,6 +4,7 @@
 #include "fastmaths.hpp"
 #include "lfo.h"
 #include "lv2/lv2plug.in/ns/ext/atom/forge.h"
+#include "dsp/eq.h"
 
 using namespace std;
 
@@ -203,6 +204,9 @@ class synth
 	public:
 
 	params* synth_params;
+	
+	EQSTATE* eq_left;
+	EQSTATE* eq_right;
 
 	static const int env_state_attack=1; 
 	static const int env_state_decay=2;

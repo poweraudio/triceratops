@@ -1,6 +1,7 @@
 
 
 #include "synth.h"
+#include "minblep.h"
 
 // CONSTRUCTOR
 
@@ -73,27 +74,23 @@ synth::synth( double _rate,string bundle_path)
 	dc1 = 0;
 	dc2 = 0;
 	dc3 = 0;
-
-	stringstream ss;
-	ss.str("");
-	ss << bundle_path << "minblep.mat";
-
-	// load table
-	FILE *fp=fopen(ss.str().c_str(),"rb");
-	unsigned int iSize;
-
-	fseek(fp,0x134,SEEK_SET);
-
-	int err = fread(&iSize,sizeof(uint),1,fp);
-	gMinBLEP.c=iSize/sizeof(double);
-
-	gMinBLEP.lpTable=(double*)malloc(iSize);
-
-	err = fread(gMinBLEP.lpTable,iSize,1,fp);
-
-	fclose(fp);
 	
+	gMinBLEP.lpTable = minBLEP_table;
+	gMinBLEP.c = sizeof(minBLEP_table) / sizeof(double);
 
+	// Initialize EQs
+				
+	eq_left = new EQSTATE();
+	init_3band_state(eq_left,220,5000,rate);	
+	eq_left->lg = 0.0; // BASS
+	eq_left->mg = 1.0; // MIDS
+	eq_left->hg = 1.0; // HIGHS
+		
+	eq_right = new EQSTATE();
+	init_3band_state(eq_right,220,5000,rate);		
+	eq_right->lg = 0.0; // BASS
+	eq_right->mg = 1.0; // MIDS
+	eq_right->hg = 1.0; // HIGHS 
 
 	buf0_left=0; buf1_left=0;
 
@@ -795,7 +792,7 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 				if (++lpO[0]->iBuffer>=lpO[0]->cBuffer) lpO[0]->iBuffer=0;
 				}
 	
-				dco_out = v; // - dc1;
+				dco_out = do_3band(eq_left, v);
 		}
 
 		if (synth_params->TRICERATOPS_WAVE_ONE[0]==2) { dco_out = sinewave_osc[0]->tick(); }
@@ -854,7 +851,7 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 				if (++lpO[0]->iBuffer>=lpO[0]->cBuffer) lpO[0]->iBuffer=0;
 				}
 	
-				dco_out = v;  - dc2;
+				dco_out = do_3band(eq_left, v);
 			}
 
 			if (synth_params->TRICERATOPS_WAVE_ONE[0]==2) dco_out = sinewave_osc[0]->tick();
@@ -909,7 +906,7 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 				if (++lpO[3]->iBuffer>=lpO[3]->cBuffer) lpO[3]->iBuffer=0;
 				}
 	
-				dco_out = v - dc2;
+				dco_out = do_3band(eq_left, v);
 		}
 
 			if (synth_params->TRICERATOPS_WAVE_ONE[0]==2) dco_out = sinewave_osc[3]->tick();
@@ -976,7 +973,7 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 				if (++lpO[1]->iBuffer>=lpO[1]->cBuffer) lpO[1]->iBuffer=0;
 				}
 	
-				dco_out = v; // - dc1;
+				dco_out = do_3band(eq_left, v);
 			}
 
 			if (synth_params->TRICERATOPS_WAVE_TWO[0]==2) dco_out = sinewave_osc[1]->tick();
@@ -1049,7 +1046,7 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 				if (++lpO[1]->iBuffer>=lpO[1]->cBuffer) lpO[1]->iBuffer=0;
 				}
 	
-				dco_out = v; // - dc1;
+				dco_out = do_3band(eq_left, v);
 			}
 
 			if (synth_params->TRICERATOPS_WAVE_TWO[0]==2) dco_out = sinewave_osc[1]->tick();
@@ -1103,7 +1100,7 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 				if (++lpO[4]->iBuffer>=lpO[4]->cBuffer) lpO[4]->iBuffer=0;
 				}
 	
-				dco_out = v; // - dc1;
+				dco_out = do_3band(eq_left, v);
 			}
 
 			if (synth_params->TRICERATOPS_WAVE_TWO[0]==2) dco_out = sinewave_osc[4]->tick();
@@ -1171,7 +1168,7 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 				if (++lpO[2]->iBuffer>=lpO[2]->cBuffer) lpO[2]->iBuffer=0;
 				}
 	
-				dco_out = v; // - dc1;
+				dco_out = do_3band(eq_left, v);
 			}
 
 			if (synth_params->TRICERATOPS_WAVE_THREE[0]==2) dco_out = sinewave_osc[2]->tick();
@@ -1246,7 +1243,7 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 				if (++lpO[2]->iBuffer>=lpO[2]->cBuffer) lpO[2]->iBuffer=0;
 				}
 	
-				dco_out = v; // - dc1;
+				dco_out = do_3band(eq_left, v);
 			}
 
 			if (synth_params->TRICERATOPS_WAVE_THREE[0]==2) dco_out = sinewave_osc[2]->tick();

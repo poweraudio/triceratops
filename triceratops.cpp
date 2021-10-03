@@ -614,9 +614,6 @@ run(LV2_Handle instance, uint32_t n_samples)
 	
 		if (isnan( output_left[x] )) output_left[x] = 0;
 		if (isnan( output_right[x] )) output_right[x] = 0;
-
-		output_left[x] = do_3band(self->eq_left, output_left[x] ); // filter out sub 20hz frequencies to remove DC offsets
-		output_right[x] = do_3band(self->eq_right, output_right[x] );
 	
 		if (self->synths[0]->synth_params->TRICERATOPS_FX_ECHO_ACTIVE[0] == 1)
 		{

@@ -7,7 +7,7 @@ from waflib.extras import autowaf as autowaf
 
 # Variables for 'waf dist'
 APPNAME = 'triceratops.lv2'
-VERSION = '0.4'
+VERSION = '0.5'
 
 # Mandatory variables
 top = '.'
@@ -36,6 +36,7 @@ def configure(conf):
     if not autowaf.is_child():
         autowaf.check_pkg(conf, 'lv2', uselib_store='LV2CORE')
         autowaf.check_pkg(conf, 'gtkmm-2.4', uselib_store='GTKMM')
+        autowaf.check_pkg(conf, 'cairomm-1.0', uselib_store='CAIROMM')
 
     # Set env['pluginlib_PATTERN']
     pat = conf.env['cshlib_PATTERN']
@@ -44,7 +45,7 @@ def configure(conf):
     conf.env['pluginlib_PATTERN'] = pat
     conf.env['pluginlib_EXT'] = pat[pat.rfind('.'):]
 
-    conf.env.LV2DIR = os.getenv('LV2_PATH').split(':')[2]
+    conf.env.LV2DIR = "/usr/lib/lv2"
 
     autowaf.display_msg(conf, "LV2 bundle directory", conf.env['LV2DIR'])
     print('')
@@ -98,7 +99,6 @@ def build(bld):
               uselib       = 'LV2CORE GTKMM',
               includes     = includes)
 
-    bld.install_files('${LV2DIR}/triceratops.lv2/', 'minblep.mat')
     bld.install_files('${LV2DIR}/triceratops.lv2/', 'logo.png')
     bld.install_files('${LV2DIR}/triceratops.lv2/', 'triceratops.conf')
     bld.install_files('${LV2DIR}/triceratops.lv2/', 'triceratops_categories.txt')
