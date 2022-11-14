@@ -5,6 +5,7 @@
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix urid: <http://lv2plug.in/ns/ext/urid#> .
 
 # This is a custom extension, which allows us to tag things easily later
 @prefix guiext: <http://lv2plug.in/ns/extensions/ui#>.
@@ -17,18 +18,25 @@ guiext:requiredFeature guiext:makeResident.
 <http://nickbailey.co.nr/triceratops>
 	a lv2:Plugin ,
 		lv2:InstrumentPlugin ;
-	doap:maintainer <http://nickbailey.co.nr> ;
+	doap:maintainer [
+		foaf:name "Nick Bailey" ;
+		foaf:homepage <http://nickbailey.co.nr> ;
+		foaf:mbox <tb303@gmx.com> ;
+	] ;
 	doap:name "Triceratops" ;
 	doap:license <http://opensource.org/licenses/gpl-3.0> ;
+	lv2:requiredFeature urid:map ;
 	lv2:optionalFeature lv2:hardRTCapable ;
+	lv2:minorVersion 2 ;
+	lv2:microVersion 0 ;
 
 # here we say that this plugin has a GUI, and its URI is that
 guiext:ui <http://nickbailey.co.nr/triceratops/gui>;
 
-######################################################################
-# AUDIO OUT AND MIDI PORTS                                         				  #
-#                                                                   							 #
-######################################################################
+#######################################################################
+# AUDIO OUT AND MIDI PORTS                                         	 #			  
+#                                                                     #							 
+#######################################################################
 
 lv2:port
 
@@ -94,10 +102,10 @@ lv2:port
 	lv2:default 0;
 ],
 
-######################################################################
-# FILTER                                                                                                                                               #
-#                                                                 							                                        #
-######################################################################
+#####################################################################
+# FILTER                                                            #                                                                                   
+#                                                                   #							                                       
+#####################################################################
 
 [
 	a lv2:ControlPort, lv2:InputPort;
