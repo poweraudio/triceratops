@@ -1,3 +1,3 @@
 [submodule "waflib"]
 	path = waflib
-	url = /usr/local/src/autowaf
+	url = https://github.com/poweraudio/autowaf
