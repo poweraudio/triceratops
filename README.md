@@ -5,7 +5,7 @@ This fork of Triceratops has the following changes:
 * Replaced `waf` binary blob with [autowaf] in source form.
 * Changed installation destination from /usr to /usr/local.
 
-[autowaf]: https://github.com/drobilla/autowaf
+[autowaf]: https://github.com/poweraudio/autowaf
 
 ---
 
