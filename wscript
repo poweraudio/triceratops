@@ -27,7 +27,7 @@ def configure(conf):
     if conf.env['MSVC_COMPILER']:
         conf.env.append_unique('CXXFLAGS', ['-TP', '-MD', '-g'])
     else:
-        conf.env.append_unique('CXXFLAGS', ['-O2','-funroll-loops','-std=c++0x','-g'])
+        conf.env.append_unique('CXXFLAGS', ['-O3','-funroll-loops','-std=c++0x'])
 
     if sys.maxsize >= 9223372036854775807:
         print("detected 64 bit architecture, enabling -fPIC")
